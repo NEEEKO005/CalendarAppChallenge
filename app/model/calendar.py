@@ -20,10 +20,26 @@ class Event:
     title: str
     description: str
     date_: date
-    start_art: time
+    start_at: time
     end_at: time
     reminders: list[Reminder] = field(default_factory=list)
+    id: str = field(default_factory=generate_unique_id)
 
+    def add_reminder(self, date_time: datetime, reminder_type: str = Reminder.EMAIL):
+        """ Agrega un recordatorio a la lista de recordatorios """
+        reminder = Reminder(date_time=date_time, type=reminder_type)
+        self.reminders.append(reminder)
+
+    def delete_reminder(self, reminder_index: int):
+        """ Elimina un recordatorio de la lista por índice """
+        if 0 <= reminder_index < len(self.reminders):
+            del self.reminders[reminder_index]
+        else:
+            reminder_not_found_error()
+
+    def __str__(self):
+        """ Retorna el formato de texto de la clase Event """
+        return f"ID: {self.id}\nEvent title: {self.title}\nDescription: {self.description}\nTime: {self.start_at} - {self.end_at}"
 
 
 
