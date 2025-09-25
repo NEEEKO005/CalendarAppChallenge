@@ -5,14 +5,27 @@ from typing import ClassVar
 from app.services.util import generate_unique_id, date_lower_than_today_error, event_not_found_error, \
     reminder_not_found_error, slot_not_available_error
 
+@dataclass
+class Reminder:
+    EMAIL: ClassVar[str] = "email"
+    SYSTEM: ClassVar[str] = "system"
+    date_time: datetime
+    type: str = EMAIL
 
-# TODO: Implement Reminder class here
+def __str__(self):
+    return f"Reminder on {self.date_time} of type {self.type}"
+
+@dataclass
+class Event:
+    title: str
+    description: str
+    date_: date
+    start_art: time
+    end_at: time
+    reminders: list[Reminder] = field(default_factory=list)
 
 
-# TODO: Implement Event class here
+
+nicolascorreapulido@
 
 
-# TODO: Implement Day class here
-
-
-# TODO: Implement Calendar class here
