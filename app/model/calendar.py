@@ -90,22 +90,22 @@ class Calendar:
         self.events: dict[str, Event] = {}
 
     def add_event(self, title: str, description: str, date_: date, start_at: time, end_at: time) -> str:
-        # Verificar que la fecha no sea anterior a hoy
+
         if date_ < datetime.now().date():
             date_lower_than_today_error()
 
-        # Si no existe un Day para esa fecha, se crea
+
         if date_ not in self.days:
             self.days[date_] = Day(date_)
 
-        # Crear evento
+
         event = Event(title=title, description=description, date_=date_, start_at=start_at, end_at=end_at)
 
-        # Agregar evento a los slots del día
+
         day = self.days[date_]
         day.add_event(event.id, start_at, end_at)
 
-        # Guardar en el diccionario de eventos
+
         self.events[event.id] = event
 
         return event.id
@@ -118,15 +118,12 @@ class Calendar:
 
     def find_available_slots(self, date_: date) -> list[time]:
         if date_ not in self.days:
-            # Si no existe ese día aún, devolver todos los slots como libres
             temp_day = Day(date_)
             return [slot for slot, event_id in temp_day.slots.items() if event_id is None]
         day = self.days[date_]
         return [slot for slot, event_id in day.slots.items() if event_id is None]
 
-    # ---------------------------
-    # Métodos que debes pegar al final
-    # ---------------------------
+
     def update_event(self, event_id: str, title: str, description: str, date_: date, start_at: time, end_at: time):
         event = self.events.get(event_id)
         if not event:
